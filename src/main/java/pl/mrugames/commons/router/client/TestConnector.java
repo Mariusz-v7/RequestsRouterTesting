@@ -7,6 +7,7 @@ import pl.mrugames.commons.router.RequestType;
 import pl.mrugames.commons.router.Response;
 import pl.mrugames.commons.router.request_handlers.ObjectRequestHandler;
 
+import java.io.Serializable;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -30,6 +31,10 @@ public class TestConnector implements Connector {
 
     @Override
     public void send(long l, String s, Object o, RequestMethod requestMethod, RequestType requestType) {
+        if (!(o instanceof Serializable)) {
+            throw new IllegalArgumentException("Payload has to implement Serializable");
+        }
+
         objectRequestHandler.handleRequest(new Request(l, sessionId, "", s, requestMethod, o, requestType))
                 .subscribe(consumer::accept);
     }
