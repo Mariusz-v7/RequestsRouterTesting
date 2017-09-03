@@ -31,7 +31,7 @@ public class TestConnector implements Connector {
 
     @Override
     public void send(long l, String s, Object o, RequestMethod requestMethod, RequestType requestType) {
-        if (!(o instanceof Serializable)) {
+        if (o != null && !(o instanceof Serializable)) {
             throw new IllegalArgumentException("Payload has to implement Serializable");
         }
 
