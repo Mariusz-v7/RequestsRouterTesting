@@ -8,7 +8,6 @@ import pl.mrugames.commons.router.Response;
 import pl.mrugames.commons.router.request_handlers.ObjectRequestHandler;
 
 import java.io.Serializable;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 @Component
@@ -17,11 +16,8 @@ public class TestConnector implements Connector {
 
     private volatile Consumer<Response> consumer;
 
-    private volatile String sessionId;
-
     TestConnector(ObjectRequestHandler objectRequestHandler) {
         this.objectRequestHandler = objectRequestHandler;
-        this.sessionId = UUID.randomUUID().toString() + '-' + UUID.randomUUID().toString();
     }
 
     @Override
@@ -35,7 +31,7 @@ public class TestConnector implements Connector {
             throw new IllegalArgumentException("Payload has to implement Serializable");
         }
 
-        objectRequestHandler.handleRequest(new Request(l, sessionId, "", s, requestMethod, o, requestType))
+        objectRequestHandler.handleRequest(new Request(l, "", s, requestMethod, o, requestType))
                 .subscribe(consumer::accept);
     }
 
