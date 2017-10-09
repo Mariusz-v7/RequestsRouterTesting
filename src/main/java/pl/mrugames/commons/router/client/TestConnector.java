@@ -31,7 +31,7 @@ public class TestConnector implements Connector {
             throw new IllegalArgumentException("Payload has to implement Serializable");
         }
 
-        objectRequestHandler.handleRequest(new Request(l, "", s, requestMethod, o, requestType))
+        objectRequestHandler.handleRequest(new Request(l, s, requestMethod, o, requestType))
                 .subscribe(consumer::accept);
     }
 
